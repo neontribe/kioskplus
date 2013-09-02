@@ -3,7 +3,7 @@
 log("Kioskplus running.");
 
 // Create custom :external selector
-$.expr[':'].external = function(obj){
+$.expr[':'].external = function (obj) {
 	return obj.href && !obj.href.match(/^mailto\:/) && (obj.hostname !== location.hostname);
 };
 
@@ -25,11 +25,8 @@ if ( options.catchExternalLinks ) {
 	});
 }
 
-// If using the extension API to intercept main frame web requests,
-// remove all targets from links to reduce spamming tabs/windows
-if ( options.useWebRequestsAPI ) {
-	externalLinks.attr("target", null);
-}
+// Remove all targets from links to stop new tabs
+externalLinks.attr("target", null);
 
 // Remove any elements given in the options
 if ( options.elementsToRemove.length ) {

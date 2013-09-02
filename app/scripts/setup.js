@@ -10,11 +10,8 @@ var options = {
 	catchExternalLinks: true,
 
 	// Listen to web requests at the chrome extension level, and
-	// redirect them
+	// redirect them back to the last allowed page
 	useWebRequestsAPI: false,
-
-	// The target URL to use on the above strategy
-	redirectURL: "http://www.archivealive.org/",
 
 	// URLs containing this domain are allowed
 	allowedHost: "archivealive.org",
