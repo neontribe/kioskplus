@@ -1,36 +1,43 @@
 {
-    "name": "__MSG_appName__",
-    "version": "0.0.1",
-    "manifest_version": 2,
-    "description": "__MSG_appDescription__",
-    "icons": {
-        "16": "images/icon-16.png",
-        "128": "images/icon-128.png"
-    },
-    "default_locale": "en",
-    "background": {
-        "scripts": [
-            "scripts/background.js"
-        ]
-    },
-  "content_scripts": [
-    {
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ],
-      "css": [
-        "styles/main.css"
-      ],
-      "js": [
-        "scripts/contentscript.js"
-      ],
-      "run_at": "document_end",
-      "all_frames": false
-    }
-  ],
-  "permissions": [
-    "history",
-    "management"
-  ]
+	"name": "Kiosk Plus",
+	"version": "0.0.1",
+	"manifest_version": 2,
+	"description": "Capture and prevent outbound navigation",
+	"icons": {
+		"16": "images/icon-16.png",
+		"128": "images/icon-128.png"
+	},
+	"default_locale": "en",
+	"background": {
+		"scripts": [
+			"scripts/setup.js",
+			"scripts/background.js"
+		]
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"http://*.archivealive.org/*",
+				"https://*.archivealive.org/*"
+			],
+			"css": [
+				"styles/main.css"
+			],
+			"js": [
+				"bower_components/jquery/jquery.min.js",
+				"scripts/setup.js",
+				"scripts/contentscript.js"
+			],
+			"run_at": "document_end",
+			"all_frames": false
+		}
+	],
+	"permissions": [
+		"webRequest",
+		"webRequestBlocking",
+		"*://*/*"
+	],
+	"web_accessible_resources": [
+		"bower_components/jquery/jquery.min.map"
+	]
 }
