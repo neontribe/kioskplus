@@ -6,6 +6,7 @@ function save_options(e) {
 	options.unwrapExternalLinks = Boolean($("[name='unwrapExternalLinks']:checked").val());
 	options.catchExternalLinks = Boolean($("[name='catchExternalLinks']:checked").val());
 	options.useWebRequestsAPI = Boolean($("[name='useWebRequestsAPI']:checked").val());
+	options.debug = Boolean($("[name='debug']:checked").val());
 	options.allowedHost = $("[name='allowedHost']").val();
 	options.elementsToRemove = $("[name='elementsToRemove']").val().split(",");
 
@@ -26,6 +27,7 @@ function restore_options() {
 		$("[name='unwrapExternalLinks']").attr("checked", options.unwrapExternalLinks);
 		$("[name='catchExternalLinks']").attr("checked", options.catchExternalLinks);
 		$("[name='useWebRequestsAPI']").attr("checked", options.useWebRequestsAPI);
+		$("[name='debug']").attr("checked", options.debug);
 		$("[name='allowedHost']").val(options.allowedHost);
 		$("[name='elementsToRemove']").val(options.elementsToRemove);
 	});

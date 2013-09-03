@@ -1,40 +1,38 @@
-'use strict';
+"use strict";
 var options = {};
 
-window.log = function () {
-	log.history = log.history || [];
-	log.history.push(arguments);
-	if ( console && options.debug ) {
-		console.log.apply(console, arguments);
-	}
-};
-
+// Load options
 chrome.storage.local.get("options", function (result) {
 	if ( result.options ) {
 		options = result.options;
 		init();
 	} else {
-		console.log("Error, cannot load extension options.");
+		if ( options.debug ) {
+			console.log("Error, cannot load extension options.");
+		}
 	}
 });
 
+// Listen for changes to options and re-initialise
 chrome.storage.onChanged.addListener(function(changes, namespace) {
 	console.log(changes);
 	if ( changes.options && changes.options.newValue ) {
 		options = changes.options.newValue;
 	}
-	console.log("options changed");
 	init();
 });
 
+// Create custom :external selector
+$.expr[':'].external = function (obj) {
+	return obj.href && !obj.href.match(/^mailto\:/) && (obj.hostname !== location.hostname);
+};
+
+// Main
 function init() {
 
-	console.log("Kioskplus running.");
-
-	// Create custom :external selector
-	$.expr[':'].external = function (obj) {
-		return obj.href && !obj.href.match(/^mailto\:/) && (obj.hostname !== location.hostname);
-	};
+	if ( options.debug ) {
+		console.log("Kioskplus content script initialising");
+	}
 
 	// Find all external links
 	var externalLinks = $("a:external");
@@ -49,7 +47,9 @@ function init() {
 		$("body").on("click", "a:external", function (evt) {
 			evt.preventDefault();
 			evt.stopImmediatePropagation();
-			console.log("Prevented navigation from", evt.target);
+			if ( options.debug ) {
+				console.log("Prevented navigation from", evt.target);
+			}
 		});
 	}
 
@@ -58,6 +58,10 @@ function init() {
 
 	// Remove any elements given in the options
 	if ( options.elementsToRemove.length ) {
-		$(options.elementsToRemove.join(", ")).remove();
+		var $condemned = $(options.elementsToRemove.join(", "));
+		if ( options.debug ) {
+			console.log("Removing " + $condemned.length + " elements");
+		}
+		$condemned.remove();
 	}
 }
