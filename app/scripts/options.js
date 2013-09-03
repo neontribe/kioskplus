@@ -1,5 +1,6 @@
 // Saves options to localStorage
-function save_options() {
+function save_options(e) {
+	e.preventDefault();
 	var options = {};
 
 	options.unwrapExternalLinks = Boolean($("[name='unwrapExternalLinks']:checked").val());
@@ -10,12 +11,10 @@ function save_options() {
 
 	chrome.storage.local.set({ "options": options }, function () {
 		// Update status to let user know options were saved
-		$("#status").html("Options Saved.");
+		$("#status").fadeIn();
 		setTimeout(function () {
-			$("#status").fadeOut(function () {
-				$(this).html("");
-			});
-		}, 750);
+			$("#status").fadeOut();
+		}, 1500);
 	});
 }
 

@@ -1,25 +1,73 @@
 <html>
 <head>
 	<title>Kiosk Plus Options</title>
+	<style type="text/css">
+		table {
+			width: 100%;
+		}
+		table td {
+			padding: 10px;
+			border-bottom: 1px solid #eee;
+		}
+		table tr:last-of-type td {
+			border-bottom: none;
+		}
+		table td:first-of-type {
+			text-align: right;
+		}
+		aside {
+			display: inline-block;
+			color: #336;
+		}
+		button {
+			font-size: 18px;
+			padding: 10px 20px;
+		}
+		#status {
+			margin-top: 10px;
+			padding: 10px;
+			background: #efe;
+			border: 1px solid #bfb;
+			color: #090;
+			display: none;
+			width: 240px;
+			text-align: center;
+		}
+	</style>
 </head>
 <body>
 
 	<form>
-		<label>
-			<input type="checkbox" name="unwrapExternalLinks" value="1"> Remove external hyperlinks where possible
-		</label>
-		<label>
-			<input type="checkbox" name="catchExternalLinks" value="1"> Catch and cancel clicks to external links
-		</label>
-		<label>
-			<input type="checkbox" name="useWebRequestsAPI" value="1"> Intercept external page loads at the browser level
-		</label>
-		<p>Allowed domain: <input type="text" name="allowedHost"> <aside>e.g. <em>archivealive.org</em></aside></p>
-		<p>Elements to remove: <input type="text" name="elementsToRemove"> <aside>comma-separated list of jQuery selectors, e.g. <em>.socials</em></aside></p>
+		<table>
+			<tr>
+				<td><input type="checkbox" name="unwrapExternalLinks" id="unwrapExternalLinks" value="1"></td>
+				<td><label for="unwrapExternalLinks">Remove external hyperlinks where possible</label></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="catchExternalLinks" id="catchExternalLinks" value="1"></td>
+				<td><label for="catchExternalLinks">Catch and cancel clicks to external links</label></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="useWebRequestsAPI" id="useWebRequestsAPI" value="1"></td>
+				<td><label for="useWebRequestsAPI">Intercept external page loads at the browser level</label></td>
+			</tr>
+			<tr>
+				<td>Allowed domain:</td>
+				<td><input type="text" name="allowedHost"> <aside>The domain of the site that is being walled in, e.g. <em>archivealive.org</em></aside></td>
+			</tr>
+			<tr>
+				<td>Elements to remove:</td>
+				<td><input type="text" name="elementsToRemove"> <aside>A comma-separated list of jQuery selectors of elements that will be removed from each page, e.g. <em>.socials, .register</em></aside></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+					<button id="save">Save</button>
+					<div id="status">Options Saved.</div>
+				</td>
+			</tr>
+		</table>
 	</form>
-
-	<div id="status"></div>
-	<button id="save">Save</button>
 
 	<script src="bower_components/jquery/jquery.min.js"></script>
 	<script src="scripts/options.js"></script>
