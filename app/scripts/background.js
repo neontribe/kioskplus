@@ -29,6 +29,11 @@ chrome.storage.local.get("options", function (result) {
 			// from all pages
 			elementsToRemove: [".socials"],
 
+			// Timeout related
+			timeout: true,
+			timeoutAfter: 300,
+			warningPeriod: 20,
+
 			// Whether or not to show debug messages in the dev console
 			debug: true
 		};

@@ -15,7 +15,7 @@
 		table td:first-of-type {
 			text-align: right;
 		}
-		input {
+		input:not([type="checkbox"]) {
 			width: 25%;
 			padding: 5px;
 			margin-right: 10px;
@@ -63,6 +63,18 @@
 			<tr>
 				<td>Elements to remove:</td>
 				<td><input type="text" name="elementsToRemove"> <aside>A comma-separated list of jQuery element selectors that will be removed from each page, e.g. <em>.socials, .register</em></aside></td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="timeout" id="timeout" value="1"></td>
+				<td><label for="timeout">Enable inactivity timeout</label></td>
+			</tr>
+			<tr>
+				<td>Timeout after:</td>
+				<td><input type="text" name="timeoutAfter"> <aside>The period of inactivity, in seconds, after which to show the timeout screen</aside></td>
+			</tr>
+			<tr>
+				<td>Warning period:</td>
+				<td><input type="text" name="warningPeriod"> <aside>The length of time, in seconds, to show the timeout warning screen for</aside></td>
 			</tr>
 			<tr>
 				<td><input type="checkbox" name="debug" id="debug" value="1"></td>

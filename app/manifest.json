@@ -24,10 +24,11 @@
 			],
 			"js": [
 				"bower_components/jquery/jquery.min.js",
+				"scripts/modal.js",
 				"scripts/contentscript.js"
 			],
 			"run_at": "document_end",
-			"all_frames": false
+			"all_frames": true
 		}
 	],
 	"permissions": [

@@ -1,5 +1,24 @@
 /* Will be compiled down to a single stylesheet with your sass files */
 
 html {
-    /* Defaults css for cssmin process */
+	/* Defaults css for cssmin process */
+}
+
+#lean_overlay {
+	position: fixed;
+	z-index: 10000;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: #000;
+	display: none;
+}
+
+#modal {
+	background: #fff;
+	border-radius: 10px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+	padding: 20px;
+	color: #000;
 }

@@ -6,9 +6,12 @@ function save_options(e) {
 	options.unwrapExternalLinks = Boolean($("[name='unwrapExternalLinks']:checked").val());
 	options.catchExternalLinks = Boolean($("[name='catchExternalLinks']:checked").val());
 	options.useWebRequestsAPI = Boolean($("[name='useWebRequestsAPI']:checked").val());
-	options.debug = Boolean($("[name='debug']:checked").val());
 	options.allowedHost = $("[name='allowedHost']").val();
 	options.elementsToRemove = $("[name='elementsToRemove']").val().split(",");
+	options.timeout = Boolean($("[name='timeout']:checked").val());
+	options.timeoutAfter = $("[name='timeoutAfter']").val();
+	options.warningPeriod = $("[name='warningPeriod']").val();
+	options.debug = Boolean($("[name='debug']:checked").val());
 
 	chrome.storage.local.set({ "options": options }, function () {
 		// Update status to let user know options were saved
@@ -27,9 +30,12 @@ function restore_options() {
 		$("[name='unwrapExternalLinks']").attr("checked", options.unwrapExternalLinks);
 		$("[name='catchExternalLinks']").attr("checked", options.catchExternalLinks);
 		$("[name='useWebRequestsAPI']").attr("checked", options.useWebRequestsAPI);
-		$("[name='debug']").attr("checked", options.debug);
 		$("[name='allowedHost']").val(options.allowedHost);
 		$("[name='elementsToRemove']").val(options.elementsToRemove);
+		$("[name='timeout']").attr("checked", options.timeout);
+		$("[name='timeoutAfter']").val(options.timeoutAfter);
+		$("[name='warningPeriod']").val(options.warningPeriod);
+		$("[name='debug']").attr("checked", options.debug);
 	});
 }
 

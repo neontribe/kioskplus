@@ -27,6 +27,36 @@ $.expr[':'].external = function (obj) {
 	return obj.href && !obj.href.match(/^mailto\:/) && (obj.hostname !== location.hostname);
 };
 
+// Timeout module
+var timeout = (function () {
+	var timeoutID, publicMethods = {};
+
+	publicMethods.startTimer = function () {
+		if ( options.debug ) {
+			console.log("Starting " + options.timeoutAfter + " seconds countdown");
+		}
+		timeoutID = setTimeout(warning, options.timeoutAfter*1000);
+		$("body").one("click.timeout", resetTimer);
+	};
+
+	function resetTimer() {
+		clearTimeout(timeoutID);
+		publicMethods.startTimer();
+	}
+
+	function warning() {
+		console.log("warning");
+		$("body").off("click.timeout");
+		//alert("Timeout!");
+
+		var $modal = $("<div id='modal'><p>Timeout!</p></div>");
+		$modal.appendTo("body");
+		$modal.leanModal().trigger("open_modal");
+	}
+
+	return publicMethods;
+})();
+
 // Main
 function init() {
 
@@ -63,5 +93,10 @@ function init() {
 			console.log("Removing " + $condemned.length + " elements");
 		}
 		$condemned.remove();
+	}
+
+	// Inactivity timeout
+	if ( options.timeout ) {
+		timeout.startTimer();
 	}
 }
