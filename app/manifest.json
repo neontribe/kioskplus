@@ -10,7 +10,6 @@
 	"default_locale": "en",
 	"background": {
 		"scripts": [
-			"scripts/setup.js",
 			"scripts/background.js"
 		]
 	},
@@ -25,7 +24,6 @@
 			],
 			"js": [
 				"bower_components/jquery/jquery.min.js",
-				"scripts/setup.js",
 				"scripts/contentscript.js"
 			],
 			"run_at": "document_end",
@@ -33,11 +31,14 @@
 		}
 	],
 	"permissions": [
+		"storage",
 		"webRequest",
 		"webRequestBlocking",
-		"*://*/*"
+		"http://*/*",
+		"https://*/*"
 	],
 	"web_accessible_resources": [
 		"bower_components/jquery/jquery.min.map"
-	]
+	],
+	"options_page": "options.html"
 }

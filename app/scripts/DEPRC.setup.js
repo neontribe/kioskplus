@@ -1,4 +1,18 @@
-// Global options
+// Shared functions
+window.log = function () {
+	log.history = log.history || [];
+	log.history.push(arguments);
+	if ( console && options.debug ) {
+		console.log.apply(console, arguments);
+	}
+};
+
+function init() {
+	backgroundScript();
+	contentScript();
+}
+
+// Hardcoded defaults
 var options = {
 	// remove links to external sites
 	// e.g. 'This is <a href="http://www.google.com">link</a>.'
@@ -24,11 +38,21 @@ var options = {
 	debug: true
 };
 
-// Shared functions
-window.log = function () {
-	log.history = log.history || [];
-	log.history.push(arguments);
-	if ( console && options.debug ) {
-		console.log.apply(console, arguments);
+// Now try loading options from extension storage instead
+chrome.storage.local.get("options", function (result) {
+	if ( result.options ) {
+		options = result.options;
+		init();
+	} else {
+		init();
 	}
-};
+});
+
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+	for (key in changes) {
+		var storageChange = changes[key];
+	}
+	options = storageChange.newValue;
+	console.log("options changed");
+	init();
+});

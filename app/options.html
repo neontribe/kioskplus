@@ -1,0 +1,28 @@
+<html>
+<head>
+	<title>Kiosk Plus Options</title>
+</head>
+<body>
+
+	<form>
+		<label>
+			<input type="checkbox" name="unwrapExternalLinks" value="1"> Remove external hyperlinks where possible
+		</label>
+		<label>
+			<input type="checkbox" name="catchExternalLinks" value="1"> Catch and cancel clicks to external links
+		</label>
+		<label>
+			<input type="checkbox" name="useWebRequestsAPI" value="1"> Intercept external page loads at the browser level
+		</label>
+		<p>Allowed domain: <input type="text" name="allowedHost"> <aside>e.g. <em>archivealive.org</em></aside></p>
+		<p>Elements to remove: <input type="text" name="elementsToRemove"> <aside>comma-separated list of jQuery selectors, e.g. <em>.socials</em></aside></p>
+	</form>
+
+	<div id="status"></div>
+	<button id="save">Save</button>
+
+	<script src="bower_components/jquery/jquery.min.js"></script>
+	<script src="scripts/options.js"></script>
+
+</body>
+</html>
