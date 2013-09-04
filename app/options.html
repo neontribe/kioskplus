@@ -23,6 +23,8 @@
 		aside {
 			display: inline-block;
 			color: #336;
+			width: 70%;
+			vertical-align: middle;
 		}
 		button {
 			font-size: 18px;
@@ -75,6 +77,14 @@
 			<tr>
 				<td>Warning period:</td>
 				<td><input type="text" name="warningPeriod"> <aside>The length of time, in seconds, to show the timeout warning screen for</aside></td>
+			</tr>
+			<tr>
+				<td>Warning message:</td>
+				<td><input type="text" name="warningMessage"> <aside>Warning message displayed to user before engaging slideshow; <em>[tp]</em> will be replace by the timeout value converted to minutes, <em>[wp]</em> will be replaced by the warning period value</aside></td>
+			</tr>
+			<tr>
+				<td>Number of slides:</td>
+				<td><input type="text" name="totalSlides"> <aside>The total number of slides, each of which must be named <em>number</em>.jpg (e.g. 1.jpg, 2.jpg, etc.) and placed in the extension's "images/slides/" folder</aside></td>
 			</tr>
 			<tr>
 				<td><input type="checkbox" name="debug" id="debug" value="1"></td>

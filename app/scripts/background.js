@@ -33,6 +33,10 @@ chrome.storage.local.get("options", function (result) {
 			timeout: true,
 			timeoutAfter: 300,
 			warningPeriod: 20,
+			warningMessage: "This screen has been idle for [tp] minutes and will reset in [wp] seconds – click the continue button to cancel",
+
+			// Number of slides
+			totalSlides: 6,
 
 			// Whether or not to show debug messages in the dev console
 			debug: true

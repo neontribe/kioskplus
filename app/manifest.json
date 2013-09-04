@@ -39,7 +39,8 @@
 		"https://*/*"
 	],
 	"web_accessible_resources": [
-		"bower_components/jquery/jquery.min.map"
+		"bower_components/jquery/jquery.min.map",
+		"images/*"
 	],
 	"options_page": "options.html"
 }

@@ -11,6 +11,8 @@ function save_options(e) {
 	options.timeout = Boolean($("[name='timeout']:checked").val());
 	options.timeoutAfter = $("[name='timeoutAfter']").val();
 	options.warningPeriod = $("[name='warningPeriod']").val();
+	options.warningMessage = $("[name='warningMessage']").val();
+	options.totalSlides = $("[name='totalSlides']").val();
 	options.debug = Boolean($("[name='debug']:checked").val());
 
 	chrome.storage.local.set({ "options": options }, function () {
@@ -35,6 +37,8 @@ function restore_options() {
 		$("[name='timeout']").attr("checked", options.timeout);
 		$("[name='timeoutAfter']").val(options.timeoutAfter);
 		$("[name='warningPeriod']").val(options.warningPeriod);
+		$("[name='warningMessage']").val(options.warningMessage);
+		$("[name='totalSlides']").val(options.totalSlides);
 		$("[name='debug']").attr("checked", options.debug);
 	});
 }

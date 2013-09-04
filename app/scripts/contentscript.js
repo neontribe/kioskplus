@@ -29,33 +29,88 @@ $.expr[':'].external = function (obj) {
 
 // Timeout module
 var timeout = (function () {
-	var timeoutID, publicMethods = {};
+	var timeoutID, intervalID, publicMethods = {};
 
 	publicMethods.startTimer = function () {
+		$("body").off("click.timeout");
 		if ( options.debug ) {
 			console.log("Starting " + options.timeoutAfter + " seconds countdown");
 		}
-		timeoutID = setTimeout(warning, options.timeoutAfter*1000);
-		$("body").one("click.timeout", resetTimer);
+		if ( !timeoutID ) {
+			timeoutID = setTimeout(warning, options.timeoutAfter*1000);
+			$("body").on("click.timeout", resetTimer);
+		}
 	};
 
 	function resetTimer() {
-		clearTimeout(timeoutID);
+		$("body").off("click.timeout");
+		if ( timeoutID ) {
+			clearTimeout(timeoutID);
+			timeoutID = null;
+		}
+		if ( intervalID ) {
+			clearInterval(intervalID);
+			intervalID = null;
+		}
 		publicMethods.startTimer();
 	}
 
 	function warning() {
-		console.log("warning");
-		$("body").off("click.timeout");
-		//alert("Timeout!");
+		var counter = options.warningPeriod;
 
-		var $modal = $("<div id='modal'><p>Timeout!</p></div>");
-		$modal.appendTo("body");
-		$modal.leanModal().trigger("open_modal");
+		$("body").off("click.timeout");
+		$("#timer").html(counter);
+
+		if ( !$("#modal").length ) {
+			var content = options.warningMessage.replace("[tp]", Math.round(options.timeoutAfter/60)).replace("[wp]", options.warningPeriod),
+				$modal = $("<div id='modal'><p>" + content + "</p><p id='timer'>" + counter + "</p><button id='#continue'>Continue</button></div>");
+			$modal.appendTo("body");
+			$modal.leanModal({ closeButton: "#modal button", whenClosed: resetTimer }).trigger("open_modal");
+		} else {
+			$("#modal").trigger("open_modal");
+		}
+
+		intervalID = setInterval(function () {
+			counter--;
+			if ( counter === 0 ) {
+				// maximum grace period reached, fade to slideshow
+				clearInterval(intervalID);
+				intervalID = null;
+
+				$("html").css("backgroundColor", "#000");
+				$("body").fadeOut(2000, slideshow);
+
+				//alert("Bam!");
+			} else {
+				$("#timer").html(counter);
+			}
+		}, 1000);
 	}
 
 	return publicMethods;
 })();
+
+function slideshow() {
+	var $body = $("body"),
+		counter = options.totalSlides,
+		animID;
+
+	$body.html("<ul id='kioskSlideshow'></ul>").css("display", "block").addClass("slideshowReady");
+
+	for(var i = 1; i <= options.totalSlides; i++) {
+		$body.find("#kioskSlideshow").append("<li style='background:url(" + chrome.extension.getURL("images/slides/" + i + ".jpg") + ");'></li>");
+	}
+
+	$("#kioskSlideshow li").css("transition", "opacity 1s linear");
+
+	animID = setInterval(function() {
+		var prev = (counter - 1) % options.totalSlides;
+		$("#kioskSlideshow li").eq(prev).removeClass("fadeIn").addClass("fadeOut");
+		var current = counter % options.totalSlides;
+		$("#kioskSlideshow li").eq(current).removeClass("fadeOut").addClass("fadeIn");
+		counter++;
+	}, 3000);
+}
 
 // Main
 function init() {
