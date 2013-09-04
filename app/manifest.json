@@ -1,46 +1,46 @@
 {
-	"name": "Kiosk Plus",
-	"version": "0.0.1",
-	"manifest_version": 2,
-	"description": "Capture and prevent outbound navigation",
-	"icons": {
-		"16": "images/icon-16.png",
-		"128": "images/icon-128.png"
-	},
-	"default_locale": "en",
-	"background": {
-		"scripts": [
-			"scripts/background.js"
-		]
-	},
-	"content_scripts": [
-		{
-			"matches": [
-				"http://*.archivealive.org/*",
-				"https://*.archivealive.org/*"
-			],
-			"css": [
-				"styles/main.css"
-			],
-			"js": [
-				"bower_components/jquery/jquery.min.js",
-				"scripts/modal.js",
-				"scripts/contentscript.js"
-			],
-			"run_at": "document_end",
-			"all_frames": true
-		}
-	],
-	"permissions": [
-		"storage",
-		"webRequest",
-		"webRequestBlocking",
-		"http://*/*",
-		"https://*/*"
-	],
-	"web_accessible_resources": [
-		"bower_components/jquery/jquery.min.map",
-		"images/*"
-	],
-	"options_page": "options.html"
+  "name": "Kiosk Plus",
+  "version": "0.1.7",
+  "manifest_version": 2,
+  "description": "Help run a series of kiosk related functions",
+  "icons": {
+    "16": "images/icon-16.png",
+    "128": "images/icon-128.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "scripts": [
+      "scripts/background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "css": [
+        "styles/main.css"
+      ],
+      "js": [
+        "bower_components/jquery/jquery.min.js",
+        "scripts/modal.js",
+        "scripts/contentscript.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "permissions": [
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "web_accessible_resources": [
+    "bower_components/jquery/jquery.min.map",
+    "images/*"
+  ],
+  "options_page": "options.html"
 }

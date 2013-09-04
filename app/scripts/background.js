@@ -35,8 +35,11 @@ chrome.storage.local.get("options", function (result) {
 			warningPeriod: 20,
 			warningMessage: "This screen has been idle for [tp] minutes and will reset in [wp] seconds – click the continue button to cancel",
 
-			// Number of slides
+			// Slideshow related
 			totalSlides: 6,
+			slideDelay: 3,
+			transitionDuration: 1,
+			slideshowTagline: "Archive Alive Touch-screen – touch the screen to explore",
 
 			// Whether or not to show debug messages in the dev console
 			debug: true

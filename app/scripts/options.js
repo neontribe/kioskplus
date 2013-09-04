@@ -3,6 +3,8 @@ function save_options(e) {
 	e.preventDefault();
 	var options = {};
 
+	$("#save").text("Saving...").attr("disabled", true);
+
 	options.unwrapExternalLinks = Boolean($("[name='unwrapExternalLinks']:checked").val());
 	options.catchExternalLinks = Boolean($("[name='catchExternalLinks']:checked").val());
 	options.useWebRequestsAPI = Boolean($("[name='useWebRequestsAPI']:checked").val());
@@ -13,13 +15,16 @@ function save_options(e) {
 	options.warningPeriod = $("[name='warningPeriod']").val();
 	options.warningMessage = $("[name='warningMessage']").val();
 	options.totalSlides = $("[name='totalSlides']").val();
+	options.slideDelay = $("[name='slideDelay']").val();
+	options.transitionDuration = $("[name='transitionDuration']").val();
+	options.slideshowTagline = $("[name='slideshowTagline']").val();
 	options.debug = Boolean($("[name='debug']:checked").val());
 
 	chrome.storage.local.set({ "options": options }, function () {
-		// Update status to let user know options were saved
-		$("#status").fadeIn();
+		// Let user know options were saved
+		$("#save").text("Options saved");
 		setTimeout(function () {
-			$("#status").fadeOut();
+			$("#save").text("Save").attr("disabled", false);
 		}, 1500);
 	});
 }
@@ -39,6 +44,9 @@ function restore_options() {
 		$("[name='warningPeriod']").val(options.warningPeriod);
 		$("[name='warningMessage']").val(options.warningMessage);
 		$("[name='totalSlides']").val(options.totalSlides);
+		$("[name='slideDelay']").val(options.slideDelay);
+		$("[name='transitionDuration']").val(options.transitionDuration);
+		$("[name='slideshowTagline']").val(options.slideshowTagline);
 		$("[name='debug']").attr("checked", options.debug);
 	});
 }

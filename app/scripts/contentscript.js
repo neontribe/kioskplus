@@ -5,7 +5,10 @@ var options = {};
 chrome.storage.local.get("options", function (result) {
 	if ( result.options ) {
 		options = result.options;
-		init();
+		// only run on configured domain
+		if ( window.top.location.hostname && window.top.location.hostname.match(options.allowedHost) ) {
+			init();
+		}
 	} else {
 		if ( options.debug ) {
 			console.log("Error, cannot load extension options.");
@@ -59,15 +62,15 @@ var timeout = (function () {
 		var counter = options.warningPeriod;
 
 		$("body").off("click.timeout");
-		$("#timer").html(counter);
+		$("#kioskModalTimer").html(counter);
 
-		if ( !$("#modal").length ) {
+		if ( !$("#kioskModal").length ) {
 			var content = options.warningMessage.replace("[tp]", Math.round(options.timeoutAfter/60)).replace("[wp]", options.warningPeriod),
-				$modal = $("<div id='modal'><p>" + content + "</p><p id='timer'>" + counter + "</p><button id='#continue'>Continue</button></div>");
+				$modal = $("<div id='kioskModal'><p>" + content + "</p><p id='kioskModalTimer'>" + counter + "</p><button>Continue</button></div>");
 			$modal.appendTo("body");
-			$modal.leanModal({ closeButton: "#modal button", whenClosed: resetTimer }).trigger("open_modal");
+			$modal.leanModal({ closeButton: "#kioskModal button", whenClosed: resetTimer }).trigger("open_modal");
 		} else {
-			$("#modal").trigger("open_modal");
+			$("#kioskModal").trigger("open_modal");
 		}
 
 		intervalID = setInterval(function () {
@@ -82,7 +85,7 @@ var timeout = (function () {
 
 				//alert("Bam!");
 			} else {
-				$("#timer").html(counter);
+				$("#kioskModalTimer").html(counter);
 			}
 		}, 1000);
 	}
@@ -90,26 +93,46 @@ var timeout = (function () {
 	return publicMethods;
 })();
 
+// Slideshow
 function slideshow() {
 	var $body = $("body"),
 		counter = options.totalSlides,
 		animID;
 
+	// Scaffold body element
 	$body.html("<ul id='kioskSlideshow'></ul>").css("display", "block").addClass("slideshowReady");
+	window.scrollTo(0);
 
+	// Remove any head scripts to be on the safe side
+	$("head script").remove();
+
+	// Set up slides
 	for(var i = 1; i <= options.totalSlides; i++) {
-		$body.find("#kioskSlideshow").append("<li style='background:url(" + chrome.extension.getURL("images/slides/" + i + ".jpg") + ");'></li>");
+		$body.find("#kioskSlideshow").append("<li style='background-image:url(" + chrome.extension.getURL("images/slides/" + i + ".jpg") + ");'></li>");
 	}
 
-	$("#kioskSlideshow li").css("transition", "opacity 1s linear");
+	// Transition duration
+	$("#kioskSlideshow li").css("transition", "opacity " + options.transitionDuration + "s linear");
 
+	// Home button
+	$("<div id='kioskSlideshowTagline'>" + options.slideshowTagline + "</div>").appendTo($body).fadeIn(1500);
+
+	// Cyclical animation
 	animID = setInterval(function() {
-		var prev = (counter - 1) % options.totalSlides;
+		var prev = (counter - 1) % options.totalSlides,
+			current = counter % options.totalSlides;
 		$("#kioskSlideshow li").eq(prev).removeClass("fadeIn").addClass("fadeOut");
-		var current = counter % options.totalSlides;
 		$("#kioskSlideshow li").eq(current).removeClass("fadeOut").addClass("fadeIn");
 		counter++;
-	}, 3000);
+	}, options.slideDelay * 1000);
+
+	// Redirect to home on click
+	$body.one("click", function () {
+		clearInterval(animID);
+		$body.fadeOut(2000, function () {
+			location.href = location.origin;
+		});
+	});
 }
 
 // Main

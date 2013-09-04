@@ -3,7 +3,8 @@
 	<title>Kiosk Plus Options</title>
 	<style type="text/css">
 		table {
-			width: 100%;
+			width: 90%;
+			margin: 0 auto;
 		}
 		table td {
 			padding: 10px;
@@ -12,33 +13,30 @@
 		table tr:last-of-type td {
 			border-bottom: none;
 		}
-		table td:first-of-type {
+		table td:nth-of-type(1) {
 			text-align: right;
+			width: 20%;
+		}
+		table td:nth-of-type(2) {
+			width: 40%;
+		}
+		table td:nth-of-type(3) {
+			width: 40%;
 		}
 		input:not([type="checkbox"]) {
-			width: 25%;
+			width: 100%;
 			padding: 5px;
-			margin-right: 10px;
 		}
-		aside {
-			display: inline-block;
-			color: #336;
-			width: 70%;
-			vertical-align: middle;
+		textarea {
+			width: 100%;
+			padding: 5px;
+		}
+		input.small {
+			width: 25%;
 		}
 		button {
 			font-size: 18px;
 			padding: 10px 20px;
-		}
-		#status {
-			margin-top: 10px;
-			padding: 10px;
-			background: #efe;
-			border: 1px solid #bfb;
-			color: #090;
-			display: none;
-			width: 240px;
-			text-align: center;
 		}
 	</style>
 </head>
@@ -49,53 +47,81 @@
 			<tr>
 				<td><input type="checkbox" name="unwrapExternalLinks" id="unwrapExternalLinks" value="1"></td>
 				<td><label for="unwrapExternalLinks">Remove external hyperlinks where possible</label></td>
+				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td><input type="checkbox" name="catchExternalLinks" id="catchExternalLinks" value="1"></td>
 				<td><label for="catchExternalLinks">Catch and cancel clicks to external links</label></td>
+				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td><input type="checkbox" name="useWebRequestsAPI" id="useWebRequestsAPI" value="1"></td>
 				<td><label for="useWebRequestsAPI">Intercept external page loads at the browser level</label></td>
+				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>Allowed domain:</td>
-				<td><input type="text" name="allowedHost"> <aside>The domain of the site that is being walled in, e.g. <em>archivealive.org</em></aside></td>
+				<td><input type="text" name="allowedHost"></td>
+				<td>The domain of the site that is being walled in, e.g. <em>archivealive.org</em></td>
 			</tr>
 			<tr>
 				<td>Elements to remove:</td>
-				<td><input type="text" name="elementsToRemove"> <aside>A comma-separated list of jQuery element selectors that will be removed from each page, e.g. <em>.socials, .register</em></aside></td>
+				<td><input type="text" name="elementsToRemove"></td>
+				<td>A comma-separated list of jQuery element selectors that will be removed from each page, e.g. <em>.socials, .register</em></td>
 			</tr>
 			<tr>
 				<td><input type="checkbox" name="timeout" id="timeout" value="1"></td>
 				<td><label for="timeout">Enable inactivity timeout</label></td>
+				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>Timeout after:</td>
-				<td><input type="text" name="timeoutAfter"> <aside>The period of inactivity, in seconds, after which to show the timeout screen</aside></td>
+				<td><input type="text" name="timeoutAfter" class="small"></td>
+				<td>The period of inactivity, in seconds, after which to show the timeout screen</td>
 			</tr>
 			<tr>
 				<td>Warning period:</td>
-				<td><input type="text" name="warningPeriod"> <aside>The length of time, in seconds, to show the timeout warning screen for</aside></td>
+				<td><input type="text" name="warningPeriod" class="small"></td>
+				<td>The length of time, in seconds, to show the timeout warning screen for</td>
 			</tr>
 			<tr>
 				<td>Warning message:</td>
-				<td><input type="text" name="warningMessage"> <aside>Warning message displayed to user before engaging slideshow; <em>[tp]</em> will be replace by the timeout value converted to minutes, <em>[wp]</em> will be replaced by the warning period value</aside></td>
+				<td><textarea name="warningMessage"></textarea></td>
+				<td>Warning message displayed to user before engaging slideshow; <em>[tp]</em> will be replace by the timeout value converted to minutes, <em>[wp]</em> will be replaced by the warning period value</td>
 			</tr>
 			<tr>
 				<td>Number of slides:</td>
-				<td><input type="text" name="totalSlides"> <aside>The total number of slides, each of which must be named <em>number</em>.jpg (e.g. 1.jpg, 2.jpg, etc.) and placed in the extension's "images/slides/" folder</aside></td>
+				<td><input type="text" name="totalSlides" class="small"></td>
+				<td>The total number of slides, each of which must be named <em>number</em>.jpg (e.g. 1.jpg, 2.jpg, etc.) and placed in the extension's "images/slides/" folder</td>
+			</tr>
+			<tr>
+				<td>Slide delay:</td>
+				<td><input type="text" name="slideDelay" class="small"></td>
+				<td>The number of seconds to show each slide for</td>
+			</tr>
+			<tr>
+				<td>Transition duration:</td>
+				<td><input type="text" name="transitionDuration" class="small"></td>
+				<td>The length in seconds of the fade transitions</td>
+			</tr>
+			<tr>
+				<td>Slideshow tagline:</td>
+				<td><textarea name="slideshowTagline"></textarea></td>
+				<td>The message displayed over the slides</td>
+			</tr>
+			<tr>
+				<td>Slides:</td>
+				<td colspan="2">Slides are stored in a folder called "images/slides/" inside the extension's folder. This folder is <em>chrome_profile_path</em>/Extensions/<em>extension_id</em>. You can find your profile path on the Chrome version page (chrome://version/), and the extension ID listed on the Extensions page.</td>
 			</tr>
 			<tr>
 				<td><input type="checkbox" name="debug" id="debug" value="1"></td>
 				<td><label for="debug">Debug mode, where actions are logged to the console</label></td>
+				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td>
-					<button id="save">Save</button>
-					<div id="status">Options Saved.</div>
-				</td>
+				<td><button id="save">Save</button></td>
+				<td>&nbsp;</td>
 			</tr>
 		</table>
 	</form>
