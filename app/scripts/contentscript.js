@@ -35,18 +35,18 @@ var timeout = (function () {
 	var timeoutID, intervalID, publicMethods = {};
 
 	publicMethods.startTimer = function () {
-		$("body").off("click.timeout");
+		$("body").off(".timeout");
 		if ( options.debug ) {
 			console.log("Starting " + options.timeoutAfter + " seconds countdown");
 		}
 		if ( !timeoutID ) {
 			timeoutID = setTimeout(warning, options.timeoutAfter*1000);
-			$("body").on("click.timeout", resetTimer);
+			$("body").on("click.timeout touchend.timeout", resetTimer);
 		}
 	};
 
 	function resetTimer() {
-		$("body").off("click.timeout");
+		$("body").off(".timeout");
 		if ( timeoutID ) {
 			clearTimeout(timeoutID);
 			timeoutID = null;
@@ -61,7 +61,7 @@ var timeout = (function () {
 	function warning() {
 		var counter = options.warningPeriod;
 
-		$("body").off("click.timeout");
+		$("body").off(".timeout");
 		$("#kioskModalTimer").html(counter);
 
 		if ( !$("#kioskModal").length ) {
@@ -127,7 +127,7 @@ function slideshow() {
 	}, options.slideDelay * 1000);
 
 	// Redirect to home on click
-	$body.one("click", function () {
+	$body.one("click touchend", function () {
 		clearInterval(animID);
 		$body.fadeOut(2000, function () {
 			location.href = location.origin;
