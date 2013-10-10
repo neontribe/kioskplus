@@ -173,6 +173,11 @@ function init() {
 		$condemned.remove();
 	}
 
+	// Prohibit right-clicks
+	$(document).on("contextmenu", function (evt) {
+		evt.preventDefault();
+	});
+
 	// Inactivity timeout
 	if ( options.timeout ) {
 		timeout.startTimer();
